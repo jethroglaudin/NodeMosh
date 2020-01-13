@@ -28,11 +28,41 @@ async function createCourse() {
 }
 
 async function getCourses() {
+    // Pagination
+    const pageNumber = 2;
+    const pageSize = 10;
+
+
+    // eq (equal)
+    // ne (not equal)
+    // gt (greater than)
+    // gte (greater than or equal to)
+    // lt less than
+    // lte (less than or equal to)
+    // in
+    // nin not in
   const courses = await Course
+    
+    //.find({ price: {$gte: 10, $lte: 20 } })
+    // .find({ price: { $in: [10, 15, 20] } })
+    // .find()
+    // .or([ {autor: "Jethro"}, { isPublished: true }])
+    // .and([])
+
+    // Starts with Jethro
+//     .find({ author: /^Mosh/ })
+    
+//     // Ends with Glaudin
+//     .find({ author: /Glaudin$/i })
+
+//     // Contains Jethro
+// .find({ author: /.*Mosh.*/ })
     .find({ author: "Jethro", isPublished: true })
-    .limit(10)
+    .skip((pageNumber - 1) * pageSize)
+    .limit(page)
     .sort({ name: 1 })
-    .select({ name: 1, tags: 1 })
+    // .select({ name: 1, tags: 1 })
+    .count();
   console.log(courses);
 }
 
