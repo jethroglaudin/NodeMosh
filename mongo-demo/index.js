@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const DB = require("./config/keys")
 
 mongoose
-  .connect("mongodb://localhost/playground")
+  .connect("mongodb://localhost/playground", { useNewUrlParser: true ,  useUnifiedTopology: true})
   .then(() => console.log("Connected to MongoDB...."))
   .catch(err => console.log("Could not connect to MongoDB...", err));
 
@@ -41,7 +42,7 @@ async function getCourses() {
     // lte (less than or equal to)
     // in
     // nin not in
-  const courses = await Course
+  const courses = await Course.find();
     
     //.find({ price: {$gte: 10, $lte: 20 } })
     // .find({ price: { $in: [10, 15, 20] } })
@@ -57,12 +58,12 @@ async function getCourses() {
 
 //     // Contains Jethro
 // .find({ author: /.*Mosh.*/ })
-    .find({ author: "Jethro", isPublished: true })
-    .skip((pageNumber - 1) * pageSize)
-    .limit(page)
-    .sort({ name: 1 })
+    // .find({ author: "Jethro", isPublished: true })
+    // .skip((pageNumber - 1) * pageSize)
+    // .limit(page)
+    // .sort({ name: 1 })
     // .select({ name: 1, tags: 1 })
-    .count();
+    // .count();
   console.log(courses);
 }
 
