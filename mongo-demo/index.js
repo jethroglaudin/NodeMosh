@@ -67,4 +67,44 @@ async function getCourses() {
   console.log(courses);
 }
 
-getCourses();
+getCourses()
+
+async function updateCourse(id) {
+  // Query First
+  // findbyId()
+  // Modify its properties 
+  // save()
+
+//    const course = await Course.findById(id);
+ const course = await Course.findByIdAndUpdate(id, {
+     $set: {
+         author: "William ",
+         isPublished: false
+     }
+  }, { new: true });
+//    if(!course) return;
+
+
+//    course.isPublished = true;
+//    course.author = "Another Author"
+//    course.set({
+//        isPublished: true,
+//        author: 'Another Author'
+//    })
+
+//    const result = await course.save();
+ console.log(course)
+}
+// 
+// updateCourse("5e1caaded181e51c8a29da1d")
+
+async function removeCourse(id) {
+
+//    const result = await Course.deleteOne({ _id: id });
+ const course = await Course.findByIdAndDelete(id);
+ console.log(course)
+//    console.log(result);
+
+
+}
+// removeCourse("5e1caaded181e51c8a29da1d")
