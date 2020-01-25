@@ -26,6 +26,7 @@ const courseSchema = new mongoose.Schema({
     type: Array,
     validate: {
       isAsync: true,
+      // isAsync is depricated
       validator: function(v, callback) {
         // Do some async work
         // when result is ready call callback
@@ -47,12 +48,14 @@ const courseSchema = new mongoose.Schema({
   }
 });
 
+
+
 const Course = mongoose.model("Course", courseSchema);
 
 async function createCourse() {
   const course = new Course({
     name: "Angular Course",
-    category: 'web',
+    category: '-',
     author: "Josh",
     tags: null,
     isPublished: true,
@@ -66,7 +69,10 @@ async function createCourse() {
   }
 
   catch(ex) {
-    console.log(ex.message)
+    for (field in ex.errors){
+      console.log(ex.errors[field].message)
+    }
+    // console.log(ex)
   }
 }
 
