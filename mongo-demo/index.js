@@ -20,7 +20,9 @@ const courseSchema = new mongoose.Schema({
       type: String,
       require: true,
       enum: ['web', 'mobile', 'network'],
-      lowercase: true
+      lowercase: true,
+      // uppercase: true,
+      trim: true
     },
   author: String,
   tags: {
@@ -45,11 +47,11 @@ const courseSchema = new mongoose.Schema({
     type: Number,
     required: function () { return this.isPublished; },
     min: 10,
-    max: 200
+    max: 200,
+    get: v => Math.round(v),
+    set: v => Math.round(v)
   }
 });
-
-
 
 const Course = mongoose.model("Course", courseSchema);
 
@@ -60,7 +62,7 @@ async function createCourse() {
     author: "Josh",
     tags: ['frontend'],
     isPublished: true,
-    price: 15
+    price: 15.8
   });
 
   try {
@@ -73,11 +75,10 @@ async function createCourse() {
     for (field in ex.errors){
       console.log(ex.errors[field].message)
     }
-    // console.log(ex)
   }
 }
 
-createCourse();
+// createCourse();
 
 async function getCourses() {
   // Pagination
@@ -92,7 +93,8 @@ async function getCourses() {
   // lte (less than or equal to)
   // in
   // nin not in
-  const courses = await Course.find();
+  const courses = await Course
+  .find({ _id: '5e2cfba55c180f1af7c9d7a8' })
 
   //.find({ price: {$gte: 10, $lte: 20 } })
   // .find({ price: { $in: [10, 15, 20] } })
@@ -111,13 +113,13 @@ async function getCourses() {
   // .find({ author: "Jethro", isPublished: true })
   // .skip((pageNumber - 1) * pageSize)
   // .limit(page)
-  // .sort({ name: 1 })
-  // .select({ name: 1, tags: 1 })
+  .sort({ name: 1 })
+  .select({ name: 1, tags: 1, price: 1 })
   // .count();
-  console.log(courses);
+  console.log(courses[0].price);
 }
 
-// getCourses();
+getCourses();
 
 async function updateCourse(id) {
   // Query First
