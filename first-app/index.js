@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const genres = require("./routes/genres");
 const mongoose = require("mongoose");
 const express = require("express");
