@@ -33,6 +33,13 @@ async function addAuthor(courseId, author){
   course.save()
 }
 
+async function removeAuthor(courseId, authorId){
+  const course = await Course.findById(courseId)
+  const author = await Author.findById(authorId)
+  author.remove();
+  course.save();
+}
+
 async function listCourses() { 
   const courses = await Course.find();
   console.log(courses);
