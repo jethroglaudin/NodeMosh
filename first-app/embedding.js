@@ -47,9 +47,12 @@ async function listCourses() {
 
 async function updateAuthor(courseId){
   const course = await Course.update({ _id: courseId }, {
-    $unset: {
-      'author': ''
+    $set: {
+      'author.name' : 'Kobe'
     }
+    // $unset: {
+    //   'author': ''
+    // }
   })
   // course.author.name = "Jethro Glaudin";
   // course.save();
